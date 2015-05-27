@@ -1,9 +1,13 @@
+html,body{
+}
 body {
 	background-color: #f8f8ff; 
+	margin-top:0;
+	margin-left:0;
 }
 .img-block {
 	display:block;
-	padding-top:8px;
+	padding-top:5px;
 }
 .img:hover {
 	opacity: 0.7;
@@ -20,11 +24,13 @@ body {
 .img-params {
 	position:absolute;
 	padding-left: 160px;
-	width: 500px;
+	width:300px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .border-trans {
 	border: 4px #ff6347 solid;
-	
 }
 .title {
 	transition-property: all;
@@ -47,28 +53,44 @@ body {
 .pointer {
 	cursor: pointer;
 }
-.textbox {
-	border: 0;
-	padding: 8px;
-	font-size: 1.3em;
-	font-family: Arial, sans-serif;
-	color: #666666;
-	border: solid 1px #ccc;
-	margin: 0px 0 20px;
-	width: 300px;
-}
-.button {
-	padding: 3px 0 0;
-	width: 100px;
-	height: 45px;
-}
+
 .gray5all {
 	color: #555555;
 }
 .absolute {
 	position: absolute;
 }
-#summary {
+.pagetop {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+}
+.pagetop a {
+    display: block;
+    background-color: #ccc;
+    text-align: center;
+    color: #222;
+    font-size: 25px;
+	border-radius: 50%;
+    text-decoration: none;
+    padding: 10px 15px 10px 15px;
+}
+ 
+.pagetop a:hover {
+    display: block;
+    background-color: #222;
+    text-align: center;
+    color: #fff;
+    font-size: 25px;
+    text-decoration: none;
+    padding: 10px 15px 10px 15px;
+}
+.nowrap {
+	white-space: nowrap;
+}
+
+.summary {
 	margin: 40px 0 0 0;
 	background-color: #FFFFFF;
 	border-style: solid ; 
@@ -76,9 +98,170 @@ body {
 	padding: 10px 0px 20px 20px;
 	width: 560px;
 }
-#logo {
-	max-width: 90px;
-	height: auto; 
+.fav-img {
+	width: 100px;
+	height: 60px;
+}
+
+.fav-del-icon{
+    background-color: #ccc;
+    text-align: center;
+	text-decoration: none;
+    color: #fff;
+    font-size: 4px;
+	padding: 0px 2px 0px 2px;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+}
+
+#wrap {
+	 width: 100%;
+     position: relative;
+     height:auto !important; /*IE6ëŒçÙ*/
+     height: 100%; /*IE6ëŒçÙ*/
+     min-height: 100%;
+}
+#header {
+	z-index: 3;
+	position: fixed;
+	white-space: nowrap;
+	background-color: #fff;
+	width: 100%;
+	padding-bottom : 5px;
+	border-bottom: 1px solid #ccc;
+}
+#main-contents {
+	margin-left : 10px;
+}
+#footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
+	text-align: center;
+	background-color: #ffffff;
+}
+
+#search-form{
+	display: inline-block;
+	padding-top  :10px;
+	padding-left  :5px;
+	
+    height :42px;
+	width: 90%;
+	overflow: hidden;
+}
+#textbox {
+	height: 24px;
+	padding: 8px;
+	font-size: 1.3em;
+	font-family: Arial, sans-serif;
+	color: #666666;
+	border: solid 1px #ccc;
+	max-width: 400px;
+	width: 40%;
+	vertical-align:top;
+}
+#button {
+	vertical-align:top;
+	height :100%;
+	width: 100px;
+}
+#fav-list-block {
+	display: inline-block;
+	vertical-align:top;
+	float: right;
+	width: 170px;
+}
+#fav-list-button {
+	width: 100%;
+	height: 40px;
+	border-radius: 10px;
+	text-align: center;
+	font-size: 17px;
+	line-height: 43px;
+	color: #ffffff;
+	background-color: #ff2020;
+}
+#fav-list {
+	position: fixed;
+	margin-top:7px;
+	width: 170px;
+	height:300px;
+	overflow:hidden;
+	color: #555555;
+	background-color: #f8f8ff;
+	border: 1px solid #ccc;
+}
+#sort {
+	vertical-align:top;
+	width:	155px;
+	height :100%;
+	font-size: 1.2em;
+	padding: 7px;
+}
+#favorite-box {
+	display:inline-block;
+	background-color: #efefef;
+	margin-top: 20px;
+	width: 820px;
+	height: 90px;
+}
+#favorite-add{
+	display:block;
+	margin-top: 7px;
+	margin-left: 285px;
+	width: 250px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	font-size: 20px;
+	border-radius: 10px;
+	color: #ffffff;
+	background-color: #ff2020;
+}
+#favorite-add span{
+	display:block;
+}
+#favorite-add :hover{
+	display:block;
+	border-radius: 10px;
+	background-color: tomato;
+}
+#favorite-delete{
+	display:block;
+	margin-top: 7px;
+	margin-left: 285px;
+	width: 250px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	font-size: 20px;
+	border-radius: 10px;
+	color: #ffffff;
+	background-color: grey;
+}
+#favorite-delete span{
+	display:block;
+}
+#favorite-delete :hover{
+	display:block;
+	border-radius: 10px;
+	background-color: darkgray;
+}
+#tweets {
+	margin-left: 295px;
+	margin-top: 5px;
+}
+#fav {
+	margin-top: 5px;
+}
+
+#icon {
+	margin-left: 5px;
+	margin-top: 15px;
+	max-width: 105px; 
 }
 #headline {
 	padding: 10px 0 0 0;
@@ -104,12 +287,7 @@ body {
 #movie-hit-cnt {
 	font-size: 80%
 }
-#sort {
-	width:	155px;
-	height: 44px;
-	font-size: 1.2em;
-	padding: 7px;
-}
+
 #no-movie {
 	font-size: 1.3em;
 }

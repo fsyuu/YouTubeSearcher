@@ -3,29 +3,34 @@ function action_search($search_words, $sort){
 	//別ファイルで開く用
 	global $search_params;
 	global $response_params;
-	
 	//YouTubeAPI用parameter
 	$APIKEY = 'AIzaSyBfOCQqZDS3BBq0ltQAVbm5XV5wwO_oiqI';
 	$YouTubeAPIv3 ='https://www.googleapis.com/youtube/v3/';
-	$maxResults = 10;
+	$maxResults = 20;
 	$part_i = 'id';
 	$part = 'id%2Csnippet%2Cstatistics%2CcontentDetails';
-	
+	$search_words = preg_replace("/(\s|　)/", "+",$search_words);
 	$videoId = array();
-	
-	$feedURL1 = "{$YouTubeAPIv3}search?part={$part_i}&q={$search_words}&maxResults={$maxResults}&key={$APIKEY}";
-	$json1 = file_get_contents($feedURL1,true);
-	$search_param_lst = json_decode( $json1 , true );
 
-	//var_dump($movie_param_lst);
+	$feedURL1 = "{$YouTubeAPIv3}search?part={$part_i}&key={$APIKEY}&q={$search_words}&maxResults={$maxResults}";
+	$ch = curl_init(); 
+	curl_setopt_array($ch,
+		array(
+			CURLOPT_URL => $feedURL1,
+			CURLOPT_SSL_VERIFYPEER =>false,
+			CURLOPT_RETURNTRANSFER =>true,
+		) 
+	);
+
+	$json1 = curl_exec($ch);
+	curl_close($ch);
+	
+	//ini_set("allow_url_fopen",1);
+	//$json1 = file_get_contents($feedURL1);
+	
+	$search_param_lst = json_decode( $json1 , true );
 	$pageinfo = $search_param_lst['pageInfo'];
 	$totalResults =  $pageinfo['totalResults'];
- 	$resultsPerPage = $pageinfo['resultsPerPage'];
-	$search_params = array(
-		'totalResults'	=>$totalResults,
-		'resultsPerPage'=>$resultsPerPage,
-		'search_words'	=>$search_words
-	);
 	
 	$items_lst_temp = $search_param_lst['items'];
 	foreach($items_lst_temp as $items_params_temp){
@@ -33,9 +38,17 @@ function action_search($search_words, $sort){
 	}
 	
 	$videoId_string = implode($videoId,',');
-	$feedURL2 = "{$YouTubeAPIv3}videos?part={$part}&id={$videoId_string}&maxResults={$maxResults}&key={$APIKEY}";
+	$feedURL2 = "{$YouTubeAPIv3}videos?part={$part}&id={$videoId_string}&key={$APIKEY}";
 	$json2 = file_get_contents($feedURL2, false);
 	$movie_param_lst = json_decode( $json2 , true );
+	
+	$pageinfo = $movie_param_lst['pageInfo'];
+ 	$resultsPerPage = $pageinfo['resultsPerPage'];
+	$search_params = array(
+		'totalResults'	=>$totalResults,
+		'resultsPerPage'=>$resultsPerPage,
+		'search_words'	=>$search_words
+	);
 	
 	$items_lst = $movie_param_lst['items'];
 	foreach($items_lst as $item_params){
@@ -74,45 +87,10 @@ function action_search($search_words, $sort){
 			);
 		}
 	}
-	//こっからつづき
-	
-	/*
-	foreach($movie_param_lst as $movie_params=>$val){
-		
-		if($movie_params == 'items'){
-			foreach($val as $items_params){
-				foreach($items_params as $item_params=>$aa){
-				var_dump($item_params);
-				//if($items_params == 'id'){
-				//	foreach($items_params as $id_params=>$id_val){
-				//		$movie_id = ($id_params == 'videoId')?:$id_val;
-				//	}
-				//}
-				}
-			}
-			foreach($movie_items_params->snippet as $snippet_params){
-				
-			}
-		}
-	*/
-		//動画の絞込み
-		//if(evaluate_movie($total, $view_cnt, $rating)){
-		//	$search_params[] =array(
-		//		'description'	=>$description,
-		//		'movie_seconds'	=>$movie_seconds,
-		//		'url'			=>$url,
-		//		'rating'		=>$rating,	
-		//		'thumbnail_url'	=>$thumbnail_url,
-		//		'title'			=>$title,
-		//		'view_cnt'		=>$view_cnt,
-		//		'author'		=>$author,
-		//		'movie_id'		=>preg_replace('/.*v=([\d\w-]+).*/', '$1', $url)
-		//	);
-		//	$hit_cnt++;
-		//}
-		//var_dump($movie_id);
-	//}
-	
+	/* ここで配列をソートしなおす
+	if($sort == "viewCount" || $sort == rating){
+		$response_params[]
+	}*/
 }
 
 //動画を検索にヒットした動画数、再生回数、評価により判定する関数

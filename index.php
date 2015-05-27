@@ -12,6 +12,7 @@
 		
 		<link rel="stylesheet" type="text/css" href="./css/youtubesearcher.css"/>
 		<link rel="stylesheet" type="text/css" href="./css/jquery.mCustomScrollbar.css"/>
+		
 		<script src="./js/jquery-2.1.3.min.js" type="text/javascript"></script>
 		<script src="./js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
 		<script src="./js/youtubesearcher.js" type="text/javascript"></script>
@@ -22,11 +23,11 @@
 	<div id="header">
 	<!--<div id="footer">Copyright © YouTubeSearcher All Rights Reserved. presented by <a href="https://twitter.com/FSyuu" target="_blank">FSyuu</a></div>
 	-->
-	<a href="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>">
+	<a href="">
 		<img id="icon" class="pointer" src="./img/yuu-icon.png" align="left" border="0"/>
 	</a>
 	
-	<form method="post" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" onSubmit="return validate()">
+	<form method="post" action="" onSubmit="return validate();">
 		<div  id="search-form">
 		<select id="sort" name="sort" class="pointer">
 			<option value="relevance">関連度の高い</option>
@@ -79,12 +80,12 @@
 <?php      
 	} else {
 		if (!isset($_POST['search_words']) || empty($_POST['search_words'])) die ('エラー: 検索するキーワードが入力されていません。');
-		require('./youtubesearcher_func.php');
+		require('youtubesearcher_func.php');
 		action_search($_POST['search_words'], $_POST['sort']); 
 		
 ?>
 			<br />
-			<?php if($search_params['totalResults'] >=1): ?>
+			<?php if($search_params['totalResults'] > 0): ?>
 			<div id="player"></div><br clear="all"/>
 			<div id="favorite-box">
 			<div id="favorite-add" class="pointer favorite" thumb="" value="">
@@ -150,4 +151,3 @@
 	
 	</body>
 </html>
-
